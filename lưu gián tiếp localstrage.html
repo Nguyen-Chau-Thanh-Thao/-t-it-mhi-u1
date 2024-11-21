@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lưu trữ Dữ liệu - Nhập thông tin người dùng</title>
+</head>
+<body>
+    <h1>Lưu trữ HTML - Nhập thông tin người dùng</h1>
+    <form id="userForm">
+        <label for="name">Tên:</label>
+        <input type="text" id="name" placeholder="Nhập tên của bạn" required>
+        <br><br>
+        <label for="age">Tuổi:</label>
+        <input type="number" id="age" placeholder="Nhập tuổi của bạn" required>
+        <br><br>
+        <label for="gender">Giới tính:</label>
+        <select id="gender" required>
+            <option value="">Chọn giới tính của bạn</option>
+            <option value="Male">Nam</option>
+            <option value="Female">Nữ</option>
+            <option value="Other">Khác</option>
+        </select>
+        <br><br>
+        <button type="button" onclick="saveData()">Lưu</button>
+        <button type="button" onclick="removeItem()">Xóa Tên</button>
+        <button type="button" onclick="clearStorage()">Xóa Tất Cả Dữ Liệu</button>
+    </form>
+
+    <h2>Số lượng dữ liệu đã lưu:</h2>
+    <p id="dataCount">0</p>
+    <script>
+        function saveData() {
+            if (typeof(Storage) !== 'undefined') {
+                // Lấy giá trị từ form
+                const name = document.getElementById('name').value;
+                const age = document.getElementById('age').value;
+                const gender = document.getElementById('gender').value;
+                // Kiểm tra nếu tất cả các trường đều được điền
+                if (!name || !age || !gender) {
+                    alert("Vui lòng điền đầy đủ thông tin!");
+                    return;
+                }
+                // Lưu dữ liệu vào localStorage
+                localStorage.setItem('name', name);
+                localStorage.setItem('age', age);
+                localStorage.setItem('gender', gender);
+                alert("Dữ liệu đã được lưu thành công!");
+                // Cập nhật số lượng dữ liệu trong localStorage
+                updateDataCount();
+            } else {
+                alert("Trình duyệt của bạn không hỗ trợ Storage");
+            }
+        }
+        function removeItem() {
+            if (typeof(Storage) !== 'undefined') {
+                // Xóa 'name' khỏi localStorage
+                localStorage.removeItem('name');
+                // Cập nhật số lượng dữ liệu sau khi xóa
+                updateDataCount();
+                alert("Tên đã được xóa!");
+            } else {
+                alert("Trình duyệt của bạn không hỗ trợ Storage");
+            }
+        }
+        function clearStorage() {
+            if (typeof(Storage) !== 'undefined') {
+                // Xóa tất cả dữ liệu trong localStorage
+                localStorage.clear();
+                // Cập nhật số lượng dữ liệu sau khi xóa
+                updateDataCount();
+                alert("Tất cả dữ liệu đã được xóa!");
+            } else {
+                alert("Trình duyệt của bạn không hỗ trợ Storage");
+            }
+        }
+        // Hàm cập nhật số lượng dữ liệu đã lưu
+        function updateDataCount() {
+            if (typeof(Storage) !== 'undefined') {
+                const dataCount = localStorage.length;  // Số lượng các mục trong localStorage
+                document.getElementById('dataCount').innerText = dataCount;  // Cập nhật hiển thị số lượng
+                console.log(`Số lượng dữ liệu trong localStorage: ${dataCount}`);  // Hiển thị trong console
+            } else {
+                alert("Trình duyệt của bạn không hỗ trợ Storage");
+            }
+        }
+        // Gọi updateDataCount khi trang được tải lại để hiển thị số lượng ban đầu
+        window.onload = updateDataCount;
+    </script>
+</body>
+</html>

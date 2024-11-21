@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session storage example</title>
+    <script type="text/javascript">
+        function xulydem() {
+            var x = document.getElementById("ketqua");
+            if (typeof(Storage) !== "undefined") {
+                if (!sessionStorage.dem) {
+                    sessionStorage.dem = 1;
+                } else {
+                    sessionStorage.dem = Number(sessionStorage.dem) + 1;
+                }
+                x.value = "Số lần nhấn: " + sessionStorage.dem;
+            } else {
+                x.value = "Trình duyệt của bạn không hỗ trợ Web Storage";
+            }
+        }
+    </script>
+</head>
+<body>
+    <form id="vidu">
+        <input type="text" id="ketqua" readonly="readonly"/>
+        <input type="button" id="nutdem" onClick="xulydem()" value="Đếm"/>
+    </form>
+</body>
+</html>
